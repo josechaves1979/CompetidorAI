@@ -45,31 +45,22 @@ if arquivo_upload is not None:
             strl.metric(label="Empresas em Promoção", value=f"{metricas['empresas_em_promocao']}")
             strl.metric(label="Maior Preço Encontrado", value=f"R$ {metricas['maior_preco']:.2f}", delta=f"Empresa: {metricas['empresa_maior']}", delta_color="inverse")
 
-        strl.markdown("---")
-        
-        # Seção de Insights da IA (Regras de Negócio)
-        strl.markdown("### 💡 Insights Gerados pela IA")
-        insights = analisador.gerar_insights(preco_meu_produto)
-        
-        for insight in insights:
-            if "risco" in insight.lower() or "acima" in insight.lower():
-                strl.warning(insight)
-            elif "competitivo" in insight.lower():
-                strl.success(insight)
-            else:
-                strl.info(insight)
-                
-    except Exception as e:
-        strl.error(f"Erro ao processar o arquivo CSV. Verifique o formato. Detalhes: {e}")
-else:
-    strl.info("💡 Por favor, faça o upload do arquivo `.csv` na barra lateral para iniciar a análise.")
-    
-    # Exemplo de formato esperado para ajudar o usuário do portfólio
-    strl.markdown("#### Formato esperado do arquivo CSV:")
-    df_exemplo = pd.DataFrame({
-        "Empresa": ["Gran Cursos", "Estratégia", "Direção Concursos", "AlfaCon"],
-        "Produto": ["Assinatura Premium", "Assinatura Premium", "Assinatura Premium", "Assinatura Premium"],
-        "Preco": [997, 797, 897, 847],
-        "Promocao": ["Não", "Sim", "Sim", "Não"]
-    })
-    strl.dataframe(df_exemplo)
+        # --- LOGO ABAIXO DOS CARDS DE MÉTRICAS NO SEU APP.PY ---
+
+strl.markdown("---")
+strl.markdown("### 📈 Análise Visual de Posicionamento")
+
+# Inicializa o construtor de dashboards
+from dashboard import DashboardConcorrencia
+dash = DashboardConcorrencia(analisador.df)
+
+# Renderiza o gráfico de comparação de preços
+grafico_precos = dash.gerar_grafico_precos(preco_meu_produto)
+strl.plotly_chart(grafico_precos, use_container_width=True)
+
+# Renderiza o gráfico de rosca para promoções
+grafico_promocao = dash.gerar_grafico_proporcao_promocao()
+strl.plotly_chart(grafico_promocao, use_container_width=True)
+
+strl.markdown("---")
+# (Daqui para baixo continua o bloco existente dos Insights da IA...)
