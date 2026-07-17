@@ -1,6 +1,6 @@
-Empresa,Produto,Preco,Promocao
-
-Gran Cursos,Assinatura Premium,997,Não
-Estratégia,Assinatura Premium,797,Sim
-Direção Concursos,Assinatura Premium,897,Sim
-AlfaCon,Assinatura Premium,847,Não
+| Empresa           | Produto            | Preço | Promoção |
+| ----------------- | ------------------ | ----- | -------- |
+| Gran Cursos       | Assinatura Premium | 997   | Não      |
+| Estratégia        | Assinatura Premium | 797   | Sim      |
+| Direção Concursos | Assinatura Premium | 897   | Sim      |
+| AlfaCon           | Assinatura Premium | 847   | Não      |
